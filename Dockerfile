@@ -1,9 +1,10 @@
 FROM tomcat:9.0-jdk17
 
-# Remove default Tomcat apps (optional, keeps it clean)
+# Clean default webapps
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy your WAR file into Tomcat's webapps folder
-COPY target/sparkjava-hello-world-1.0.jar /usr/local/tomcat/webapps/ROOT.war
+# Create fresh ROOT with index.jsp
+RUN mkdir -p /usr/local/tomcat/webapps/ROOT
+COPY index.jsp /usr/local/tomcat/webapps/ROOT/index.jsp
 
-EXPOSE 8080
+EXPOSE 8082
