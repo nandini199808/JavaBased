@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  name: myagent
 
 steps:
 # Step 1: Maven Build
