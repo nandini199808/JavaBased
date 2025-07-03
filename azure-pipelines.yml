@@ -10,8 +10,5 @@ pool:
   name: myagent  # <<< your self-hosted agent pool name
 
 steps:
-- task: Checkout@1
-  displayName: 'Checkout code'
-
-- script: echo "Running on self-hosted agent"
-  displayName: 'Self-hosted Agent Test'
+- script: echo "Hello from self-hosted agent!"
+  displayName: 'Run a script'
