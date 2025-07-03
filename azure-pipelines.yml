@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- main  # or your branch
+- master  # or your branch
 
 pool:
   name: myagent  # <<< your self-hosted agent pool name
