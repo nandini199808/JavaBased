@@ -4,26 +4,14 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- main  # or your branch
 
 pool:
-  name: myagent
+  name: myagent  # <<< your self-hosted agent pool name
 
 steps:
-# Step 1: Maven Build
-  - task: Maven@4
-    inputs:
-      mavenPomFile: 'pom.xml'
-      options: '-DskipTests'
-    displayName: 'Build java War with Maven'
+- task: Checkout@1
+  displayName: 'Checkout code'
 
-# Step 2: Docker Build (Local only - no push to ACR yet)
-
-  - task: Docker@2
-    inputs:
-      command: 'build'
-      Dockerfile: '**/Dockerfile'
-      tags: |
-        latest
-      repository: 'java-webapp'
-    displayName: 'Run a multi-line script'
+- script: echo "Running on self-hosted agent"
+  displayName: 'Self-hosted Agent Test'
