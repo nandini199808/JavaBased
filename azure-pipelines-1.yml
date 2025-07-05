@@ -1,0 +1,19 @@
+trigger:
+- master
+
+pool:
+  name: mypool  # your self-hosted agent pool
+
+variables:
+  azureSubscription: 'stackbox-connection'
+  appName: 'stackbox-java-webapp'  # your Web App name
+  imageName: 'stackboxacr.azurecr.io/stackbox-java-app:latest'
+
+steps:
+- task: AzureWebAppContainer@1
+  displayName: 'Deploy to Azure Web App'
+  inputs:
+    azureSubscription: $(azureSubscription)
+    appName: $(appName)
+    containers: $(imageName)
+
