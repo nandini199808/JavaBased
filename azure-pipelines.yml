@@ -7,19 +7,19 @@ trigger:
 - master
 
 pool:
-  name: myagent
+  name: mypool
 
 variables:
   imageName: 'stackbox-java-app'
 
 steps:
 - script: mvn clean package
-  displayName: '📦 Java App Build'
+  displayName: ' Java App Build'
 
 - script: |
     docker build -t $(imageName) .
     docker tag $(imageName) stackboxacr.azurecr.io/$(imageName)
     az acr login --name stackboxacr
     docker push stackboxacr.azurecr.io/$(imageName)
-  displayName: '🐳 Build & Push to ACR'
+  displayName: ' Build & Push to ACR'
 
