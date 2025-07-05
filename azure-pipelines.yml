@@ -46,4 +46,4 @@ steps:
     echo " Pushing image to ACR..."
     docker push stackboxacr.azurecr.io/$(imageName):$(Build.BuildId)
   displayName: 'Push to ACR'
-
+   
