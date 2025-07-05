@@ -5,7 +5,7 @@ pool:
   name: mypool  # your self-hosted agent pool
 
 variables:
-  azureSubscription: 'stackbox-connection'
+  azureSubscription: 'stackbox-con'
   appName: 'stackbox-java-webapp'  # your Web App name
   imageName: 'stackboxacr.azurecr.io/stackbox-java-app:latest'
 
