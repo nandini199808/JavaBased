@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
@@ -13,37 +8,21 @@ variables:
   imageName: 'stackbox-java-app'
 
 steps:
-- checkout: self
-  fetchDepth: 1
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean package'
+  displayName: ' Build Java App with Maven'
 
-# 2) Build the Java app
-- script: mvn clean package
-  displayName: ' Java App Build'
-
-
-# 3) Build Docker image
-- script: |
-    docker build -t $(imageName) .
-    docker tag $(imageName) stackboxacr.azurecr.io/$(imageName)
-    az acr login --name stackboxacr
-    docker push stackboxacr.azurecr.io/$(imageName)
-  displayName: ' Build & Push to ACR'
-
-# 4) Tag for ACR
-- script: |
-    echo " Tagging image for ACR..."
-    docker tag $(imageName) stackboxacr.azurecr.io/$(imageName):$(Build.BuildId)
-  displayName: 'Docker Tag'
-
-# 5) Login to ACR
-- script: |
-    echo " Logging in to ACR..."
-    az acr login --name stackboxacr
-  displayName: 'ACR Login'
-
-# 6) Push to ACR
-- script: |
-    echo " Pushing image to ACR..."
-    docker push stackboxacr.azurecr.io/$(imageName):$(Build.BuildId)
-  displayName: 'Push to ACR'
-   
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'stackbox-connection'   #  Service connection name
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      echo " Logged in via Azure DevOps Service Connection"
+      docker build -t $(imageName) .
+      docker tag $(imageName) stackboxacr.azurecr.io/$(imageName)
+      az acr login --name stackboxacr
+      docker push stackboxacr.azurecr.io/$(imageName)
+  displayName: ' Build & Push Docker Image to ACR'
