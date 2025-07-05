@@ -17,7 +17,7 @@ steps:
 
 - task: AzureCLI@2
   inputs:
-    azureSubscription: 'stackbox-connection'   #  Service connection name
+    azureSubscription: 'stackbox-con'   #  Service connection name
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
